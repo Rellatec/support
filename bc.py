@@ -12,7 +12,7 @@ st.set_page_config(
 # Add a title and description
 st.title("🔍 BC3D Update Checker")
 st.markdown("""
-    This app helps update `BC3D_list_ 2024_06.xlsx` and then checks `Bucket_Camera_Aug_21 2024.xlsx` for any missing cameras.
+    This app checks if there is any new data in `Bucket_Camera_Aug_21 2024.xlsx` that is not present in `BC3D_list_ 2024_06.xlsx`.
     Click the button below to start the process.
 """)
 
@@ -20,24 +20,24 @@ st.markdown("""
 initial_file_path = 'BC3D_list_ 2024_06.xlsx'
 new_file_path = 'Bucket_Camera_Aug_21 2024.xlsx'
 
-# Add a button to trigger the update and comparison
-if st.button("Check for Missing Cameras"):
+# Add a button to trigger the check for new data
+if st.button("Check for New Data"):
     # Load the initial and new files into dataframes
     df_initial = pd.read_excel(initial_file_path)
     df_new = pd.read_excel(new_file_path)
 
-    # Identify common columns to check for updates and missing data
+    # Identify common columns to check for new data
     common_columns = df_initial.columns.intersection(df_new.columns).tolist()
 
     if common_columns:
-        # Update the BC3D comments using the initial file
-        updated_df = df_initial.copy()  # Placeholder for any update logic
-
-        # Check for cameras in the new file that are missing in the initial file
-        missing_in_initial = df_new[~df_new.set_index(common_columns).index.isin(df_initial.set_index(common_columns).index)]
+        # Check for new data in the new file that is not in the initial file
+        new_data = df_new[~df_new.set_index(common_columns).index.isin(df_initial.set_index(common_columns).index)]
 
         # Display the results
-        st.warning("Cameras missing in the initial file (found in new file):")
-        st.dataframe(missing_in_initial)
+        if not new_data.empty:
+            st.success("New data found in `Bucket_Camera_Aug_21 2024.xlsx`:")
+            st.dataframe(new_data)
+        else:
+            st.info("No new data found in `Bucket_Camera_Aug_21 2024.xlsx`.")
     else:
         st.warning("No common columns found between the two files.")
