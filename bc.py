@@ -21,7 +21,7 @@ initial_file_path = 'BC3D_list_ 2024_06.xlsx'
 new_file_path = 'Bucket_Camera_Aug_21 2024.xlsx'
 
 # Add a button to trigger the update and comparison
-if st.button("UCheck for Missing Cameras"):
+if st.button("Check for Missing Cameras"):
     # Load the initial and new files into dataframes
     df_initial = pd.read_excel(initial_file_path).dropna()
     df_new = pd.read_excel(new_file_path).dropna()
@@ -37,7 +37,6 @@ if st.button("UCheck for Missing Cameras"):
         missing_in_initial = df_new[~df_new.set_index(common_columns).index.isin(df_initial.set_index(common_columns).index)]
 
         # Display the results
-        st.success("BC3D  updated.")
         st.warning("Cameras missing in the initial file (found in new file):")
         st.dataframe(missing_in_initial)
     else:
