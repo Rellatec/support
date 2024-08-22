@@ -12,7 +12,7 @@ st.set_page_config(
 # Add a title and description
 st.title("🔍 BC3D Update Checker")
 st.markdown("""
-    This app helps you update the BC3D comments using the initial file, then checks the new file for any missing cameras or updates.
+    This app helps BC3D_list_ 2024_06.xlsx and then checks Bucket_Camera_Aug_21 2024 for any missing cameras.
     Click the button below to start the process.
 """)
 
@@ -21,7 +21,7 @@ initial_file_path = 'BC3D_list_ 2024_06.xlsx'
 new_file_path = 'Bucket_Camera_Aug_21 2024.xlsx'
 
 # Add a button to trigger the update and comparison
-if st.button("Update BC3D Comments and Check for Missing Cameras"):
+if st.button("UCheck for Missing Cameras"):
     # Load the initial and new files into dataframes
     df_initial = pd.read_excel(initial_file_path).dropna()
     df_new = pd.read_excel(new_file_path).dropna()
@@ -37,7 +37,7 @@ if st.button("Update BC3D Comments and Check for Missing Cameras"):
         missing_in_initial = df_new[~df_new.set_index(common_columns).index.isin(df_initial.set_index(common_columns).index)]
 
         # Display the results
-        st.success("BC3D comments updated.")
+        st.success("BC3D  updated.")
         st.warning("Cameras missing in the initial file (found in new file):")
         st.dataframe(missing_in_initial)
     else:
