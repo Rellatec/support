@@ -23,8 +23,8 @@ new_file_path = 'Bucket_Camera_Aug_21 2024.xlsx'
 # Add a button to trigger the update and comparison
 if st.button("Update BC3D Comments and Check for Missing Cameras"):
     # Load the initial and new files into dataframes
-    df_initial = pd.read_excel(initial_file_path)
-    df_new = pd.read_excel(new_file_path)
+    df_initial = pd.read_excel(initial_file_path).dropna()
+    df_new = pd.read_excel(new_file_path).dropna()
 
     # Identify common columns to check for updates and missing data
     common_columns = df_initial.columns.intersection(df_new.columns).tolist()
